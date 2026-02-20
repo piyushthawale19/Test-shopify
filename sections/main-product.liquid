@@ -1,0 +1,128 @@
+{%- comment -%}
+  Main Product Section
+  Rendered by templates/product.json
+{%- endcomment -%}
+
+<section class="product-page section-padding">
+  <div class="container">
+    <div class="product-page__wrapper" style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;">
+
+      {%- comment -%} Product Image Gallery {%- endcomment -%}
+      <div class="product-page__media">
+        {%- if product.featured_image != blank -%}
+          <img
+            src="{{ product.featured_image | image_url: width: 800 }}"
+            alt="{{ product.featured_image.alt | default: product.title | escape }}"
+            width="800"
+            height="{{ 800 | divided_by: product.featured_image.aspect_ratio | round }}"
+            loading="eager"
+            style="width:100%; border-radius:var(--radius-md);"
+          >
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+
+        {%- if product.images.size > 1 -%}
+          <div style="display:flex; gap:8px; margin-top:12px; overflow-x:auto;">
+            {%- for image in product.images -%}
+              <img
+                src="{{ image | image_url: width: 150 }}"
+                alt="{{ image.alt | default: product.title | escape }}"
+                width="80"
+                height="100"
+                loading="lazy"
+                style="border-radius:var(--radius-sm); cursor:pointer; object-fit:cover;"
+              >
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Product Info {%- endcomment -%}
+      <div class="product-page__info">
+        {%- if product.vendor != blank -%}
+          <p style="font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#999; margin-bottom:8px;">
+            {{ product.vendor }}
+          </p>
+        {%- endif -%}
+
+        <h1 style="margin-bottom:16px;">{{ product.title }}</h1>
+
+        {%- render 'price', product: product -%}
+
+        {%- if product.description != blank -%}
+          <div class="product-page__description" style="margin:20px 0; line-height:1.8; color:#555;">
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+
+        {% form 'product', product %}
+          {%- unless product.has_only_default_variant -%}
+            <div class="form-group">
+              <label class="form-label" for="product-variant-{{ product.id }}">{{ 'products.product.variant' | t }}</label>
+              <select
+                id="product-variant-{{ product.id }}"
+                name="id"
+                class="form-select"
+              >
+                {%- for variant in product.variants -%}
+                  <option
+                    value="{{ variant.id }}"
+                    {% unless variant.available %}disabled{% endunless %}
+                    {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                  >
+                    {{ variant.title }} — {{ variant.price | money }}
+                    {%- unless variant.available %} ({{ 'products.product.sold_out' | t }}){% endunless -%}
+                  </option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          {%- endunless -%}
+
+          <div class="form-group">
+            <label class="form-label" for="product-qty-{{ product.id }}">{{ 'products.product.quantity' | t }}</label>
+            <input
+              type="number"
+              id="product-qty-{{ product.id }}"
+              name="quantity"
+              value="1"
+              min="1"
+              class="form-input"
+              style="max-width:100px;"
+            >
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:12px; margin-top:20px;">
+            <button
+              type="submit"
+              class="btn btn--primary btn--full"
+              {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+            >
+              {%- if product.selected_or_first_available_variant.available -%}
+                {{ 'products.product.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </button>
+
+            {%- if product.selected_or_first_available_variant.available -%}
+              {{ form | payment_button }}
+            {%- endif -%}
+          </div>
+        {% endform %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Page",
+  "tag": "section",
+  "class": "main-product-section",
+  "settings": []
+}
+{% endschema %}

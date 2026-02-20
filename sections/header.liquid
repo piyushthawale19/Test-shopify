@@ -1,0 +1,103 @@
+{%- comment -%} Mobile Drawer Overlay {%- endcomment -%}
+<div class="mobile-drawer__overlay" aria-hidden="true"></div>
+
+{%- comment -%} Mobile Drawer {%- endcomment -%}
+<nav class="mobile-drawer" aria-label="{{ 'sections.header.menu' | t }}">
+  <div class="mobile-drawer__close">
+    <button type="button" class="mobile-drawer__close" aria-label="{{ 'accessibility.close' | t }}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  <div class="mobile-drawer__nav">
+    {%- for link in section.settings.menu.links -%}
+      <a href="{{ link.url }}" class="mobile-drawer__link">{{ link.title }}</a>
+    {%- endfor -%}
+  </div>
+</nav>
+
+{%- comment -%} Header {%- endcomment -%}
+<header class="site-header" role="banner">
+  <div class="container">
+    <div class="header__wrapper">
+
+      {%- comment -%} Mobile Menu Toggle {%- endcomment -%}
+      <button type="button" class="header__mobile-toggle" aria-label="{{ 'accessibility.menu' | t }}">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      {%- comment -%} Logo {%- endcomment -%}
+      <div class="header__logo">
+        <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+          {%- if settings.logo != blank -%}
+            <img
+              src="{{ settings.logo | image_url: width: settings.logo_max_width | times: 2 }}"
+              alt="{{ settings.logo.alt | default: shop.name | escape }}"
+              width="{{ settings.logo_max_width }}"
+              height="{{ settings.logo_max_width | divided_by: settings.logo.aspect_ratio }}"
+              loading="eager"
+            >
+          {%- else -%}
+            <span class="header__logo-text">{{ settings.logo_text | default: shop.name }}</span>
+          {%- endif -%}
+        </a>
+      </div>
+
+      {%- comment -%} Desktop Navigation {%- endcomment -%}
+      <nav class="header__nav" aria-label="{{ 'sections.header.menu' | t }}">
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}" class="header__nav-link{% if link.active %} header__nav-link--active{% endif %}">
+            {{ link.title }}
+          </a>
+        {%- endfor -%}
+      </nav>
+
+      {%- comment -%} Icons {%- endcomment -%}
+      <div class="header__icons">
+        {%- comment -%} Search {%- endcomment -%}
+        <a href="{{ routes.search_url }}" class="header__icon" aria-label="{{ 'sections.header.search' | t }}">
+          {%- render 'icon-search' -%}
+        </a>
+
+        {%- comment -%} Account {%- endcomment -%}
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{{ routes.account_url }}" class="header__icon" aria-label="{{ 'sections.header.account' | t }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+        {%- endif -%}
+
+        {%- comment -%} Cart {%- endcomment -%}
+        <a href="{{ routes.cart_url }}" class="header__icon" aria-label="{{ 'sections.header.cart' | t }}">
+          {%- render 'icon-cart' -%}
+          <span class="header__cart-count"{% if cart.item_count == 0 %} style="display:none"{% endif %}>
+            {{ cart.item_count }}
+          </span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "div",
+  "class": "header-section",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

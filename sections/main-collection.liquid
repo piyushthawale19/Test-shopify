@@ -1,0 +1,49 @@
+{%- comment -%}
+  Main Collection Section
+  Rendered by templates/collection.json
+{%- endcomment -%}
+
+<section class="collection-page section-padding">
+  <div class="container">
+    <div class="page-header" style="margin-bottom:40px;">
+      <h1 class="page-header__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div style="max-width:600px; margin:12px auto 0; color:#666;">
+          {{ collection.description }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if collection.products.size > 0 -%}
+      <div class="product-grid">
+        {%- for product in collection.products -%}
+          {%- render 'product-card', product: product, show_free_shipping: true -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        {%- paginate collection.products by 12 -%}
+          <div class="text-center" style="margin-top:40px;">
+            {{ paginate | default_pagination }}
+          </div>
+        {%- endpaginate -%}
+      {%- endif -%}
+    {%- else -%}
+      <div class="text-center" style="padding:60px 0;">
+        <p>{{ 'collections.general.no_matches' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--outline" style="margin-top:20px;">
+          {{ 'general.cart.continue_shopping' | t }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Page",
+  "tag": "section",
+  "class": "main-collection-section",
+  "settings": []
+}
+{% endschema %}

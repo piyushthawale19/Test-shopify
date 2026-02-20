@@ -1,0 +1,109 @@
+{%- comment -%}
+  Product Card Snippet
+  Usage: {% render 'product-card', product: product, show_free_shipping: true %}
+{%- endcomment -%}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign compare_at_price = current_variant.compare_at_price
+  assign price = current_variant.price
+  assign available = current_variant.available
+  assign on_sale = false
+  if compare_at_price > price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="product-card">
+  <div class="product-card__media">
+    <a href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_image != blank -%}
+        <img
+          src="{{ product.featured_image | image_url: width: 600 }}"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          width="300"
+          height="400"
+          loading="lazy"
+        >
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </a>
+
+    <div class="product-card__badges">
+      {%- if on_sale -%}
+        <span class="badge badge--sale">{{ 'sections.product_grid.sale' | t }}</span>
+      {%- endif -%}
+      {%- unless available -%}
+        <span class="badge badge--sold-out">{{ 'sections.product_grid.sold_out' | t }}</span>
+      {%- endunless -%}
+      {%- if show_free_shipping and settings.show_free_shipping_badge -%}
+        <span class="badge badge--free-shipping">{{ settings.free_shipping_text | default: 'Free Shipping' }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="product-card__body">
+    {%- if product.vendor != blank -%}
+      <p class="product-card__vendor">{{ product.vendor }}</p>
+    {%- endif -%}
+
+    <h3 class="product-card__title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+
+    {%- render 'price', product: product, current_variant: current_variant -%}
+
+    {%- comment -%} Variant Selector {%- endcomment -%}
+    {%- if product.has_only_default_variant == false -%}
+      <div class="product-card__variants">
+        <label class="visually-hidden" for="variant-select-{{ product.id }}">{{ 'sections.product_grid.size' | t }}</label>
+        <select
+          id="variant-select-{{ product.id }}"
+          class="form-select product-card__variant-select"
+          aria-label="{{ 'sections.product_grid.size' | t }}"
+        >
+          {%- for variant in product.variants -%}
+            <option
+              value="{{ variant.id }}"
+              data-price="{{ variant.price | money }}"
+              data-compare-price="{{ variant.compare_at_price | money }}"
+              data-available="{{ variant.available }}"
+              {% if variant == current_variant %}selected{% endif %}
+            >
+              {{ variant.title }} — {{ variant.price | money }}
+            </option>
+          {%- endfor -%}
+        </select>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Add to Cart Form {%- endcomment -%}
+    <div class="product-card__actions">
+      {% form 'product', product, class: 'product-card__form' %}
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+        <input type="hidden" name="quantity" value="1">
+
+        <button
+          type="submit"
+          class="product-card__add-btn"
+          {% unless available %}disabled{% endunless %}
+        >
+          {%- if available -%}
+            {{ 'sections.product_grid.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'sections.product_grid.sold_out' | t }}
+          {%- endif -%}
+        </button>
+      {% endform %}
+
+      {%- if available -%}
+        {% form 'product', product %}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          {{ form | payment_button }}
+        {% endform %}
+      {%- endif -%}
+    </div>
+  </div>
+</div>

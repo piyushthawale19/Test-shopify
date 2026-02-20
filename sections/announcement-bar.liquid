@@ -1,0 +1,40 @@
+{%- if section.settings.announcement_text != blank -%}
+  <div class="announcement-bar" role="region" aria-label="{{ 'sections.announcement_bar.announcement' | t }}">
+    <div class="container">
+      <p class="announcement-bar__text">{{ section.settings.announcement_text }}</p>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "tag": "section",
+  "class": "announcement-bar-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement Text",
+      "default": "🎉 Free Shipping on Orders Above ₹999 | Shop Now!"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,14 @@
+{
+  "type": "footer",
+  "name": "Footer Group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "footer_description": "Your destination for premium Indian ethnic wear. Handcrafted with love, delivered with care.",
+        "copyright_text": "© 2026 Unique Collections. All rights reserved."
+      }
+    }
+  },
+  "order": ["footer"]
+}

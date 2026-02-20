@@ -1,0 +1,79 @@
+{%- liquid
+  assign collection = section.settings.collection
+  assign limit = section.settings.products_to_show | default: 8
+-%}
+
+<section class="trending-section section-padding">
+  <div class="container">
+    <div class="trending-section__header">
+      <h2>{{ section.settings.title | default: 'Trending Now' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p>{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="trending-section__track">
+      {%- if collection != blank and collection.products.size > 0 -%}
+        {%- for product in collection.products limit: limit -%}
+          {%- render 'product-card', product: product, show_free_shipping: false -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..6) -%}
+          <div class="product-card">
+            <div class="product-card__media">
+              {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+            <div class="product-card__body">
+              <p class="product-card__vendor">Brand Name</p>
+              <h3 class="product-card__title"><a href="#">Trending Product</a></h3>
+              <div class="product-card__price">
+                <span class="product-card__price-current">₹1,499</span>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trending Products",
+  "tag": "section",
+  "class": "trending-section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Trending Now"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Most loved styles this season"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to Show",
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trending Products"
+    }
+  ]
+}
+{% endschema %}

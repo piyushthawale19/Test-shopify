@@ -1,0 +1,83 @@
+<section class="category-carousel section-padding">
+  <div class="container">
+    <div class="category-carousel__header">
+      <h2>{{ section.settings.title | default: 'Shop by Category' }}</h2>
+    </div>
+
+    <div class="category-carousel__track">
+      {%- for block in section.blocks -%}
+        <div class="category-card" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.link | default: '#' }}">
+            <div class="category-card__image">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 440 }}"
+                  alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                  width="220"
+                  height="280"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {{ 'collection-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <p class="category-card__title">{{ block.settings.title | default: 'Category' }}</p>
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category Carousel",
+  "tag": "section",
+  "class": "category-carousel-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Shop by Category"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title",
+          "default": "Category"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Category Carousel",
+      "blocks": [
+        { "type": "category", "settings": { "title": "Sarees" } },
+        { "type": "category", "settings": { "title": "Lehengas" } },
+        { "type": "category", "settings": { "title": "Kurta Sets" } },
+        { "type": "category", "settings": { "title": "Dupattas" } },
+        { "type": "category", "settings": { "title": "Gowns" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

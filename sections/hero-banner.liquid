@@ -1,0 +1,93 @@
+<section class="hero-banner section-padding">
+  <div class="container">
+    <div class="hero-banner__wrapper">
+
+      <div class="hero-banner__content">
+        {%- if section.settings.subtitle != blank -%}
+          <p class="hero-banner__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.title != blank -%}
+          <h1 class="hero-banner__title">{{ section.settings.title }}</h1>
+        {%- endif -%}
+
+        {%- if section.settings.description != blank -%}
+          <p class="hero-banner__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.button_text != blank -%}
+          <a
+            href="{{ section.settings.button_link | default: '#' }}"
+            class="btn btn--primary"
+          >
+            {{ section.settings.button_text }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="hero-banner__image">
+        {%- if section.settings.image != blank -%}
+          <img
+            src="{{ section.settings.image | image_url: width: 800 }}"
+            alt="{{ section.settings.image.alt | escape }}"
+            width="800"
+            height="{{ 800 | divided_by: section.settings.image.aspect_ratio | round }}"
+            loading="eager"
+          >
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "tag": "section",
+  "class": "hero-banner-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "New Arrivals 2026"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Elegance Meets Tradition"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Discover our handpicked collection of premium ethnic wear designed for the modern Indian woman."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner"
+    }
+  ]
+}
+{% endschema %}

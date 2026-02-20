@@ -1,0 +1,99 @@
+{%- liquid
+  assign collection = section.settings.collection
+  assign limit = section.settings.products_to_show | default: 8
+-%}
+
+<section class="product-grid-section section-padding">
+  <div class="container">
+    <div class="product-grid-section__header">
+      <h2>{{ section.settings.title | default: 'Our Products' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p>{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="product-grid">
+      {%- if collection != blank and collection.products.size > 0 -%}
+        {%- for product in collection.products limit: limit -%}
+          {%- render 'product-card', product: product, show_free_shipping: section.settings.show_free_shipping -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..limit) -%}
+          <div class="product-card">
+            <div class="product-card__media">
+              {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+            <div class="product-card__body">
+              <p class="product-card__vendor">Brand Name</p>
+              <h3 class="product-card__title"><a href="#">Product Title</a></h3>
+              <div class="product-card__price">
+                <span class="product-card__price-current">₹1,999</span>
+                <span class="product-card__price-compare">₹2,999</span>
+              </div>
+              <button type="button" class="product-card__add-btn" disabled>Add to Cart</button>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_view_all and collection != blank -%}
+      <div class="text-center" style="margin-top: 40px;">
+        <a href="{{ collection.url }}" class="btn btn--outline">View All Products</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Grid",
+  "tag": "section",
+  "class": "product-grid-section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Our Collection"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Handpicked styles for every occasion"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to Show",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_free_shipping",
+      "label": "Show Free Shipping Badge",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View All' button",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid"
+    }
+  ]
+}
+{% endschema %}

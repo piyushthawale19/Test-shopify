@@ -1,0 +1,58 @@
+{
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "announcement_text": "🎉 Free Shipping on Orders Above ₹999 | Shop Now!"
+      }
+    },
+    "hero-banner": {
+      "type": "hero-banner",
+      "settings": {
+        "subtitle": "New Arrivals 2026",
+        "title": "Elegance Meets Tradition",
+        "description": "Discover our handpicked collection of premium ethnic wear designed for the modern Indian woman.",
+        "button_text": "Shop Collection"
+      }
+    },
+    "category-carousel": {
+      "type": "category-carousel",
+      "settings": {
+        "title": "Shop by Category"
+      },
+      "blocks": {
+        "cat-1": { "type": "category", "settings": { "title": "Sarees" } },
+        "cat-2": { "type": "category", "settings": { "title": "Lehengas" } },
+        "cat-3": { "type": "category", "settings": { "title": "Kurta Sets" } },
+        "cat-4": { "type": "category", "settings": { "title": "Dupattas" } },
+        "cat-5": { "type": "category", "settings": { "title": "Gowns" } }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4", "cat-5"]
+    },
+    "product-grid": {
+      "type": "product-grid",
+      "settings": {
+        "title": "Our Collection",
+        "subtitle": "Handpicked styles for every occasion",
+        "products_to_show": 8,
+        "show_free_shipping": true,
+        "show_view_all": true
+      }
+    },
+    "trending-products": {
+      "type": "trending-products",
+      "settings": {
+        "title": "Trending Now",
+        "subtitle": "Most loved styles this season",
+        "products_to_show": 8
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "hero-banner",
+    "category-carousel",
+    "product-grid",
+    "trending-products"
+  ]
+}

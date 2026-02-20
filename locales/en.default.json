@@ -1,0 +1,94 @@
+{
+  "general": {
+    "meta": {
+      "page": "Page {{ page }}"
+    },
+    "breadcrumbs": {
+      "home": "Home"
+    },
+    "search": {
+      "placeholder": "Search our store...",
+      "submit": "Search",
+      "no_results": "No results found for \"{{ terms }}\""
+    },
+    "cart": {
+      "title": "Your Cart",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue Shopping",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "note": "Order Note",
+      "update": "Update",
+      "remove": "Remove"
+    },
+    "404": {
+      "title": "Page not found",
+      "subtitle": "The page you were looking for does not exist.",
+      "link": "Continue Shopping"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close": "Close",
+    "menu": "Menu"
+  },
+  "sections": {
+    "announcement_bar": {
+      "announcement": "Announcement"
+    },
+    "header": {
+      "menu": "Menu",
+      "cart": "Cart",
+      "account": "Account",
+      "search": "Search",
+      "close_menu": "Close menu"
+    },
+    "hero_banner": {
+      "subtitle": "Subtitle",
+      "title": "Title",
+      "description": "Description",
+      "button": "Button"
+    },
+    "category_carousel": {
+      "title": "Shop by Category"
+    },
+    "product_grid": {
+      "title": "Our Products",
+      "add_to_cart": "Add to Cart",
+      "sold_out": "Sold Out",
+      "buy_now": "Buy It Now",
+      "free_shipping": "Free Shipping",
+      "sale": "Sale",
+      "size": "Size"
+    },
+    "trending_products": {
+      "title": "Trending Now"
+    },
+    "footer": {
+      "quick_links": "Quick Links",
+      "customer_service": "Customer Service",
+      "follow_us": "Follow Us"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "buy_now": "Buy It Now",
+      "quantity": "Quantity",
+      "description": "Description",
+      "variant": "Variant",
+      "price": "Price",
+      "compare_at_price": "Regular price",
+      "sale_price": "Sale price",
+      "vendor": "Vendor"
+    }
+  },
+  "collections": {
+    "general": {
+      "title": "Collections",
+      "no_matches": "No products match your selection."
+    }
+  }
+}

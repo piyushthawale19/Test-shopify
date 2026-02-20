@@ -1,0 +1,26 @@
+{%- comment -%}
+  Price Snippet
+  Usage: {% render 'price', product: product, current_variant: current_variant %}
+{%- endcomment -%}
+
+{%- liquid
+  assign current_variant = current_variant | default: product.selected_or_first_available_variant
+  assign compare_at_price = current_variant.compare_at_price
+  assign price = current_variant.price
+  assign on_sale = false
+  if compare_at_price > price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="product-card__price">
+  <span class="product-card__price-current">
+    {{ price | money }}
+  </span>
+
+  {%- if on_sale -%}
+    <span class="product-card__price-compare">
+      {{ compare_at_price | money }}
+    </span>
+  {%- endif -%}
+</div>
