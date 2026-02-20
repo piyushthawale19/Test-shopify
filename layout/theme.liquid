@@ -25,38 +25,61 @@
     <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
   {%- endif -%}
 
-  {%- unless settings.font_heading.system? -%}
-    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-  {%- endunless -%}
+  {%- liquid
+    assign heading_font = settings.font_heading
+    assign body_font = settings.font_body
+  -%}
 
-  {%- unless settings.font_body.system? -%}
-    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-  {%- endunless -%}
+  {%- if heading_font != blank -%}
+    {%- unless heading_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+  {%- endif -%}
+
+  {%- if body_font != blank -%}
+    {%- unless body_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+  {%- endif -%}
 
   {{ 'base.css' | asset_url | stylesheet_tag }}
   {{ 'theme.css' | asset_url | stylesheet_tag }}
 
-  {%- unless settings.font_heading.system? -%}
-    <style>
-      {{ settings.font_heading | font_face: font_display: 'swap' }}
-    </style>
-  {%- endunless -%}
+  {%- if heading_font != blank -%}
+    {%- unless heading_font.system? -%}
+      <style>{{ heading_font | font_face: font_display: 'swap' }}</style>
+    {%- endunless -%}
+  {%- endif -%}
 
-  {%- unless settings.font_body.system? -%}
-    <style>
-      {{ settings.font_body | font_face: font_display: 'swap' }}
-    </style>
-  {%- endunless -%}
+  {%- if body_font != blank -%}
+    {%- unless body_font.system? -%}
+      <style>{{ body_font | font_face: font_display: 'swap' }}</style>
+    {%- endunless -%}
+  {%- endif -%}
 
   <style>
     :root {
-      --color-primary: {{ settings.color_primary }};
-      --color-secondary: {{ settings.color_secondary }};
-      --color-text: {{ settings.color_text }};
-      --color-background: {{ settings.color_background }};
-      --color-accent: {{ settings.color_accent }};
-      --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
-      --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+      {%- if settings.color_primary != blank -%}
+        --color-primary: {{ settings.color_primary }};
+      {%- endif -%}
+      {%- if settings.color_secondary != blank -%}
+        --color-secondary: {{ settings.color_secondary }};
+      {%- endif -%}
+      {%- if settings.color_text != blank -%}
+        --color-text: {{ settings.color_text }};
+      {%- endif -%}
+      {%- if settings.color_background != blank -%}
+        --color-background: {{ settings.color_background }};
+      {%- endif -%}
+      {%- if settings.color_accent != blank -%}
+        --color-accent: {{ settings.color_accent }};
+      {%- endif -%}
+      {%- if heading_font != blank -%}
+        --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      {%- endif -%}
+      {%- if body_font != blank -%}
+        --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+      {%- endif -%}
     }
   </style>
 

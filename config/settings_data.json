@@ -8,36 +8,6 @@
     "logo_text": "Unique Collections",
     "logo_max_width": 150,
     "show_free_shipping_badge": true,
-    "free_shipping_text": "Free Shipping",
-    "sections": {
-      "announcement-bar": {
-        "type": "announcement-bar",
-        "settings": {
-          "announcement_text": "🎉 Free Shipping on Orders Above ₹999 | Shop Now!"
-        }
-      },
-      "header": {
-        "type": "header",
-        "settings": {}
-      },
-      "hero-banner": {
-        "type": "hero-banner",
-        "settings": {
-          "subtitle": "New Arrivals 2026",
-          "title": "Elegance Meets Tradition",
-          "description": "Discover our handpicked collection of premium ethnic wear designed for the modern Indian woman.",
-          "button_text": "Shop Collection",
-          "button_link": ""
-        }
-      },
-      "footer": {
-        "type": "footer",
-        "settings": {
-          "footer_description": "Your destination for premium Indian ethnic wear. Handcrafted with love, delivered with care.",
-          "copyright_text": "© 2026 Unique Collections. All rights reserved."
-        }
-      }
-    },
-    "content_for_index": []
+    "free_shipping_text": "Free Shipping"
   }
 }

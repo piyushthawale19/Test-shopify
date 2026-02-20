@@ -19,9 +19,10 @@
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..limit) -%}
+          {%- assign placeholder_index = i | modulo: 6 | plus: 1 -%}
           <div class="product-card">
             <div class="product-card__media">
-              {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+              {{ 'product-' | append: placeholder_index | placeholder_svg_tag: 'placeholder-svg' }}
             </div>
             <div class="product-card__body">
               <p class="product-card__vendor">Brand Name</p>
